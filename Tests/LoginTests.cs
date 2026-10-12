@@ -1,5 +1,6 @@
 ﻿using Microsoft.Playwright;
 using NUnit.Framework;
+using saucedemo_playwright_csharp.Config;
 using saucedemo_playwright_csharp.Pages;
 
 namespace saucedemo_playwright_csharp.Tests;

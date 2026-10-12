@@ -1,25 +1,23 @@
 using Microsoft.Playwright;
+using saucedemo_playwright_csharp.Config;
 
 namespace saucedemo_playwright_csharp.Pages;
 
-public class LoginPage
+public class LoginPage : BasePage
 {
-    private readonly IPage _page;
+    private ILocator UsernameInput => Page.GetByPlaceholder("Username");
 
-    private ILocator UsernameInput => _page.GetByPlaceholder("Username");
+    private ILocator PasswordInput => Page.GetByPlaceholder("Password");
 
-    private ILocator PasswordInput => _page.GetByPlaceholder("Password");
+    private ILocator LoginButton => Page.GetByRole(AriaRole.Button, new() { Name = "Login" });
 
-    private ILocator LoginButton => _page.GetByRole(AriaRole.Button, new() { Name = "Login" });
-
-    public LoginPage(IPage page)
+    public LoginPage(IPage page) : base(page)
     {
-        _page = page;
     }
 
     public async Task NavigateAsync()
     {
-        await _page.GotoAsync(TestConfig.BaseUrl);
+        await Page.GotoAsync(TestConfig.BaseUrl);
     }
 
     public async Task<InventoryPage> LoginAsync(string username, string password)
@@ -27,7 +25,7 @@ public class LoginPage
         await UsernameInput.FillAsync(username);
         await PasswordInput.FillAsync(password);
         await LoginButton.ClickAsync();
-        return new InventoryPage(_page);
+        return new InventoryPage(Page);
     }
 
     public ILocator GetUsernameInput()

@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Text.Json;
 
+namespace saucedemo_playwright_csharp.Config;
+
 public static class TestConfig
 {
     public static string BaseUrl { get; private set; } = "";

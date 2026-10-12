@@ -2,14 +2,11 @@ using Microsoft.Playwright;
 
 namespace saucedemo_playwright_csharp.Pages;
 
-public class InventoryPage
+public class InventoryPage : BasePage
 {
-    private readonly IPage _page;
+    public ILocator PageTitle => Page.GetByText("Products", new() { Exact = true });
 
-    public ILocator PageTitle => _page.GetByText("Products", new() { Exact = true });
-
-    public InventoryPage(IPage page)
+    public InventoryPage(IPage page) : base(page)
     {
-        _page = page;
     }
 }
