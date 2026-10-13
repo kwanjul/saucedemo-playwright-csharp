@@ -16,6 +16,8 @@ public class BaseTest
     {
         Playwright = await Microsoft.Playwright.Playwright.CreateAsync();
 
+        Playwright.Selectors.SetTestIdAttribute("data-test");
+
         Browser = await Playwright.Chromium.LaunchAsync(
             new BrowserTypeLaunchOptions
             {

@@ -11,6 +11,8 @@ public class LoginPage : BasePage
 
     private ILocator LoginButton => Page.GetByRole(AriaRole.Button, new() { Name = "Login" });
 
+    private ILocator ErrorMessage => Page.GetByTestId("error");
+
     public LoginPage(IPage page) : base(page)
     {
     }
@@ -31,5 +33,10 @@ public class LoginPage : BasePage
     public ILocator GetUsernameInput()
     {
         return UsernameInput;
+    }
+
+    public ILocator GetErrorMessage()
+    {
+        return ErrorMessage;
     }
 }
