@@ -28,4 +28,19 @@ public class CheckoutTests : BaseTest
         await Assertions.Expect(checkoutCompletePage.ConfirmationMessage).ToBeVisibleAsync();        
     }
 
+    [TestCase("", "Smith", "07601", "Error: First Name is required")]
+    [TestCase("John", "", "07601", "Error: Last Name is required")]
+    [TestCase("John", "Smith", "", "Error: Postal Code is required")]
+    public async Task CheckoutRequiresMandatoryFields(string firstName, string lastName,
+        string postalCode, string expectedErrorMessage)
+    {
+        InventoryPage inventoryPage = await LoginSuccessfullyAsync();
+        await inventoryPage.AddProductToCartAsync("Sauce Labs Backpack");
+        CartPage cartPage = await inventoryPage.NavigateToCartAsync();
+        CheckoutInformationPage checkoutInformationPage = await cartPage.ProceedToCheckoutAsync();
+        await checkoutInformationPage.SubmitCheckoutInformationAsync(firstName, lastName, postalCode);
+        await Assertions.Expect(checkoutInformationPage.ErrorMessage).ToHaveTextAsync(expectedErrorMessage);
+        await Assertions.Expect(checkoutInformationPage.PageTitle).ToBeVisibleAsync();
+    }
+
 }
