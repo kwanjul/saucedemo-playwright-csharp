@@ -22,4 +22,26 @@ public class InventoryPage : BasePage
     {
         await SortDropdown.SelectOptionAsync(sortValue);
     }
+
+    private ILocator GetProductCard(string productName)
+    {
+        return Page.GetByTestId("inventory-item")
+            .Filter(new LocatorFilterOptions
+            {
+                Has = Page.GetByTestId("inventory-item-name")
+                    .GetByText(productName, new() { Exact = true })
+            });
+    }
+
+    public async Task AddProductToCartAsync(string productName)
+    {
+        await GetProductCard(productName).GetByRole(AriaRole.Button, 
+            new LocatorGetByRoleOptions { Name = "Add to cart", Exact = true}).ClickAsync();
+    }
+
+    public async Task RemoveProductFromCartAsync(string productName)
+    {
+        await GetProductCard(productName).GetByRole(AriaRole.Button, 
+            new LocatorGetByRoleOptions { Name = "Remove", Exact = true}).ClickAsync();        
+    }
 }
