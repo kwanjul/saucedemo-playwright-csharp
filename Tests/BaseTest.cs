@@ -1,5 +1,7 @@
 using Microsoft.Playwright;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using System.Text.RegularExpressions;
 using saucedemo_playwright_csharp.Config;
 using saucedemo_playwright_csharp.Pages;
 
@@ -29,16 +31,50 @@ public class BaseTest
         Page = await Context.NewPageAsync();
     }
 
+    private static string GetProjectRoot()
+    {
+        DirectoryInfo? directory = new DirectoryInfo(AppContext.BaseDirectory);
+
+        while (directory != null)
+        {
+            string projectFile = Path.Combine(
+                directory.FullName, "saucedemo-playwright-csharp.csproj");
+            if (File.Exists(projectFile))
+            {
+                return directory.FullName;
+            }
+            directory = directory.Parent;
+        }
+        throw new DirectoryNotFoundException("Could not locate the project root directory.");
+    }
+
     [TearDown]
     public async Task TearDown()
     {
-        if (Context != null)
-            await Context.CloseAsync();
+        try
+        {
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed && Page != null)
+            {
+                string path = Path.Combine(GetProjectRoot(), "TestResults", "Screenshots");
+                Directory.CreateDirectory(path);
+                string testName = TestContext.CurrentContext.Test.Name;
+                string safeTestName = Regex.Replace(testName, @"[^a-zA-Z0-9_-]", "_");
+                string screenshotPath = Path.Combine(path, safeTestName + ".png");
+                await Page.ScreenshotAsync(new PageScreenshotOptions
+                {
+                    Path = screenshotPath, FullPage = true
+                });
+            }            
+        } finally
+        {
+            if (Context != null)
+                await Context.CloseAsync();
 
-        if (Browser != null)
-            await Browser.CloseAsync();
+            if (Browser != null)
+                await Browser.CloseAsync();
 
-        Playwright?.Dispose();
+            Playwright?.Dispose();            
+        }
     }
 
     protected async Task<InventoryPage> LoginSuccessfullyAsync()
