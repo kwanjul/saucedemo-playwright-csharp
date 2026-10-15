@@ -10,6 +10,8 @@ public class CartPage : BasePage
 
     public ILocator ProductNames => Page.GetByTestId("inventory-item-name");
 
+    private ILocator CheckoutButton => Page.GetByRole(AriaRole.Button, new() { Name = "Checkout", Exact = true});
+
     public CartPage(IPage page) : base(page)
     {
     }
@@ -23,5 +25,11 @@ public class CartPage : BasePage
             })
         .GetByRole(AriaRole.Button, 
             new LocatorGetByRoleOptions { Name = "Remove", Exact = true}).ClickAsync();        
+    }
+
+    public async Task<CheckoutInformationPage> ProceedToCheckoutAsync()
+    {
+        await CheckoutButton.ClickAsync();
+        return new CheckoutInformationPage(Page);
     }
 }

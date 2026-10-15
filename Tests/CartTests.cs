@@ -69,8 +69,8 @@ public class CartTests : BaseTest
         await Assertions.Expect(cartPage.ShoppingCartBadge).ToHaveTextAsync("1");
         await Assertions.Expect(cartPage.ProductNames).ToHaveTextAsync(new[] { "Sauce Labs Bike Light" });
     }
-        [Test]
-
+        
+    [Test]
     public async Task RemoveAllProductsFromCart()
     {
         InventoryPage inventoryPage = await LoginSuccessfullyAsync();
