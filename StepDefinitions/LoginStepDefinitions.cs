@@ -37,6 +37,16 @@ public class LoginStepDefinitions
         inventoryPage = await loginPage.LoginAsync(TestConfig.Username, TestConfig.Password);
     }
 
+    [When("I log in with invalid credentials")]
+    public async Task WhenILogInWithInvalidCredentials()
+    {
+        if (loginPage == null)
+        {
+            throw new InvalidOperationException("Login page has not been initialized.");
+        }
+        await loginPage.SubmitCredentialsAsync(TestConfig.Username, "WrongPassword");
+    }
+
     [Then("I should see the inventory page")]
     public async Task ThenIShouldSeeTheInventoryPage()
     {
@@ -46,4 +56,16 @@ public class LoginStepDefinitions
         }
         await Assertions.Expect(inventoryPage.PageTitle).ToBeVisibleAsync();
     }
+
+    [Then("I should see a login error message")]
+    public async Task ThenIShouldSeeLoginErrorMessage()
+    {
+        if (loginPage == null)
+        {
+            throw new InvalidOperationException("Login page has not been initialized.");
+        }
+        await Assertions.Expect(loginPage.GetErrorMessage())
+            .ToHaveTextAsync("Epic sadface: Username and password do not match any user in this service");
+    }
+
 }

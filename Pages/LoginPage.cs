@@ -22,11 +22,16 @@ public class LoginPage : BasePage
         await Page.GotoAsync(TestConfig.BaseUrl);
     }
 
-    public async Task<InventoryPage> LoginAsync(string username, string password)
+    public async Task SubmitCredentialsAsync(string username, string password)
     {
         await UsernameInput.FillAsync(username);
-        await PasswordInput.FillAsync(password);
+        await PasswordInput.FillAsync(password);        
         await LoginButton.ClickAsync();
+    }
+
+    public async Task<InventoryPage> LoginAsync(string username, string password)
+    {
+        await SubmitCredentialsAsync(username, password);
         return new InventoryPage(Page);
     }
 

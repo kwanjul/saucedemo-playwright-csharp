@@ -2,7 +2,11 @@
 
 [![Playwright C# Tests](https://github.com/kwanjul/saucedemo-playwright-csharp/actions/workflows/playwright-tests.yml/badge.svg)](https://github.com/kwanjul/saucedemo-playwright-csharp/actions/workflows/playwright-tests.yml)
 
-**[View the latest public HTML test report](https://kwanjul.github.io/saucedemo-playwright-csharp/)**
+## Test Reports
+
+View the latest automated test results:
+
+[View latest Playwright public HTML test report](https://kwanjul.github.io/saucedemo-playwright-csharp/)
 
 An end-to-end UI test automation framework for [Sauce Demo](https://www.saucedemo.com/), built with **C#**, **Microsoft Playwright**, **NUnit**, and **.NET 10**. The project demonstrates maintainable Page Object Model design, reusable browser setup, data-driven testing, BDD with Reqnroll, and automated execution through GitHub Actions.
 
@@ -23,9 +27,9 @@ An end-to-end UI test automation framework for [Sauce Demo](https://www.saucedem
 | Inventory | Product count and names; sorting by name and price |
 | Shopping cart | Add one or multiple products; verify contents; remove products from inventory or cart |
 | Checkout | Complete purchase flow; validation of required customer-information fields |
-| BDD | Successful login expressed in Gherkin and executed through Reqnroll |
+| BDD | Successful login; unsuccessful login; add product to cart expressed in Gherkin and executed through Reqnroll |
 
-**Current suite:** 19 NUnit test cases plus one Reqnroll scenario (20 total). Both positive and negative paths are covered.
+**Current suite:** 19 NUnit test cases plus three Reqnroll scenario (22 total). Both positive and negative paths are covered.
 
 ## Project structure
 
