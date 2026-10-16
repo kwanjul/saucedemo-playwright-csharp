@@ -10,7 +10,7 @@ public class InventoryTests : BaseTest
     public async Task InventoryPageDisplaysSixProducts()
     {
         InventoryPage inventoryPage = await LoginSuccessfullyAsync();
-        await Assertions.Expect(inventoryPage.InventoryItems).ToHaveCountAsync(7);
+        await Assertions.Expect(inventoryPage.InventoryItems).ToHaveCountAsync(6);
     }
 
     [Test]
