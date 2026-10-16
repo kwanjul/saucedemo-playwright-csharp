@@ -8,6 +8,11 @@ on:
     - cron: '0 8 * * 1-5'
       timezone: 'America/New_York'
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-24.04
@@ -39,3 +44,23 @@ jobs:
           name: playwright-test-results
           path: TestResults/
           if-no-files-found: warn
+
+      - name: Prepare GitHub Pages report
+        if: always()
+        run: |
+          mkdir -p pages
+          if [ -f TestResults/TestReport.html ]; then
+            cp TestResults/TestReport.html pages/index.html
+          else
+            echo "<h1>Test report unavailable</h1>" > pages/index.html
+          fi
+
+      - name: Upload GitHub Pages artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: pages/
+
+      - name: Deploy to GitHub Pages
+        if: always()
+        uses: actions/deploy-pages@v4
