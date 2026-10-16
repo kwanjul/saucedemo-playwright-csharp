@@ -2,6 +2,8 @@
 
 [![Playwright C# Tests](https://github.com/kwanjul/saucedemo-playwright-csharp/actions/workflows/playwright-tests.yml/badge.svg)](https://github.com/kwanjul/saucedemo-playwright-csharp/actions/workflows/playwright-tests.yml)
 
+**[View the latest public HTML test report](https://kwanjul.github.io/saucedemo-playwright-csharp/)**
+
 An end-to-end UI test automation framework for [Sauce Demo](https://www.saucedemo.com/), built with **C#**, **Microsoft Playwright**, **NUnit**, and **.NET 10**. The project demonstrates maintainable Page Object Model design, reusable browser setup, data-driven testing, BDD with Reqnroll, and automated execution through GitHub Actions.
 
 ## Technology stack
@@ -81,9 +83,11 @@ Scheduled runs may begin slightly later than the configured time depending on Gi
 
 ## Reports and failure screenshots
 
+The **[latest HTML test report](https://kwanjul.github.io/saucedemo-playwright-csharp/)** is published to GitHub Pages after workflow runs and is publicly viewable without a GitHub account. The published report includes the run date and time and shows test outcomes.
+
 The workflow uploads a downloadable artifact named **`playwright-test-results`**, containing `TestReport.html`. When a test fails and its browser page is available, teardown also captures a full-page PNG screenshot under `TestResults/Screenshots/`.
 
-Screenshots are generated **only for failures**; a fully passing run normally produces no screenshots. The artifact-upload step runs even when tests fail, to preserve diagnostic information.
+Screenshots are generated **only for failures**; a fully passing run normally produces no screenshots. Screenshots are included in the downloadable Actions artifact, not embedded in the public HTML report. The artifact-upload step runs even when tests fail, to preserve diagnostic information.
 
 To inspect results, open a workflow run in GitHub's **Actions** tab and download **`playwright-test-results`** from the **Artifacts** section.
 
