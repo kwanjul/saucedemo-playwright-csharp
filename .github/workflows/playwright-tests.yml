@@ -47,10 +47,32 @@ jobs:
 
       - name: Prepare GitHub Pages report
         if: always()
+        env:
+          TZ: America/New_York
         run: |
           mkdir -p pages
           if [ -f TestResults/TestReport.html ]; then
             cp TestResults/TestReport.html pages/index.html
+
+            RUN_DATE=$(date '+%B %d, %Y at %I:%M %p %Z')
+
+            python3 - "$RUN_DATE" <<'PY'
+          import sys
+          from pathlib import Path
+          from html import escape
+
+          report = Path("pages/index.html")
+          html = report.read_text(encoding="utf-8")
+          timestamp = escape(sys.argv[1])
+
+          html = html.replace(
+              "<h1>Test run details</h1>",
+              f"<h1>Test run details</h1><p><strong>Last run:</strong> {timestamp}</p>",
+              1
+          )
+
+          report.write_text(html, encoding="utf-8")
+          PY
           else
             echo "<h1>Test report unavailable</h1>" > pages/index.html
           fi
@@ -63,4 +85,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         if: always()
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
