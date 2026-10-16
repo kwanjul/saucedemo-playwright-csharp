@@ -2,13 +2,13 @@
 
 [![Playwright C# Tests](https://github.com/kwanjul/saucedemo-playwright-csharp/actions/workflows/playwright-tests.yml/badge.svg)](https://github.com/kwanjul/saucedemo-playwright-csharp/actions/workflows/playwright-tests.yml)
 
+An end-to-end UI test automation framework for [Sauce Demo](https://www.saucedemo.com/), built with **C#**, **Microsoft Playwright**, **NUnit**, and **.NET 10**. The project demonstrates maintainable Page Object Model design, reusable browser setup, data-driven testing, BDD with Reqnroll, and automated execution through GitHub Actions.
+
 ## Test Reports
 
 View the latest automated test results:
 
 [View latest Playwright public HTML test report](https://kwanjul.github.io/saucedemo-playwright-csharp/)
-
-An end-to-end UI test automation framework for [Sauce Demo](https://www.saucedemo.com/), built with **C#**, **Microsoft Playwright**, **NUnit**, and **.NET 10**. The project demonstrates maintainable Page Object Model design, reusable browser setup, data-driven testing, BDD with Reqnroll, and automated execution through GitHub Actions.
 
 ## Technology stack
 
